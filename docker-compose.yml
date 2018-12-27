@@ -1,0 +1,69 @@
+version: "3.6"
+
+services:
+  postgres:
+    image: postgres:latest
+    hostname: postgres
+    restart: always
+    networks:
+      - greek
+    ports:
+      - "5432:5432"
+    environment:
+      - DEBUG=false
+
+      - DB_USER=gotoschool
+      - DB_PASS=goto1234
+      - DB_NAME=greek
+
+      - POSTGRES_DB=greek
+      - POSTGRES_DATABASE=greek
+      - POSTGRES_USER=gotoschool
+      - POSTGRES_PASSWORD=goto1234
+    volumes:
+      - /tmp/postgresql:/var/lib/postgresql
+
+  syracuse:
+    image: gotoschool/syracuse:v0.0.1
+    container_name: syracuse
+    hostname: syracuse
+    restart: always
+    networks:
+      - greek
+    environment:
+      PORT: 8001
+      POSTGRES_DSN: "postgres://gotoschool:goto1234@postgres:5432/greek?sslmode=disable"
+    depends_on:
+      - postgres
+
+  sicily:
+    image: gotoschool/sicily:v0.0.1
+    container_name: sicily
+    hostname: sicily
+    restart: always
+    networks:
+      - greek
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      CITIZENS_HOST: "syracuse"
+      CITIZENS_PORT: 8001
+      PALERMO_HOST: "pelermo"
+      PALERMO_PORT: 8003
+    depends_on:
+      - syracuse
+      - palermo
+
+  palermo:
+    image: gotoschool/palermo:v0.0.1
+    container_name: palermo
+    hostname: palermo
+    restart: always
+    networks:
+      - greek
+    environment:
+      PORT: 8003
+
+networks:
+  greek:
