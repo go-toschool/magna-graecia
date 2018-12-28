@@ -6,7 +6,7 @@ In order to run the application with docker-compose you need to have installed:
 
 - docker
 
-Then, run 
+Then, run
 
 ```sh
 $ docker-compose up
