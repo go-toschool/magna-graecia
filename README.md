@@ -1,4 +1,4 @@
-# Magna craecia
+# Magna graecia
 
 This repository hold files to orchestrate our micro service system.
 
