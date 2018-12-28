@@ -31,7 +31,6 @@ services:
     image: gotoschool/syracuse:v0.0.1
     container_name: syracuse
     hostname: syracuse
-    restart: always
     networks:
       greek:
         aliases:
@@ -48,7 +47,6 @@ services:
     image: gotoschool/sicily:v0.0.1
     container_name: sicily
     hostname: sicily
-    restart: always
     networks:
       greek:
         aliases:
@@ -71,7 +69,6 @@ services:
     image: gotoschool/palermo:v0.0.1
     container_name: palermo
     hostname: palermo
-    restart: always
     networks:
       greek:
         aliases:
