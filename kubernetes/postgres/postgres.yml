@@ -5,7 +5,7 @@ metadata:
   labels:
     app: postgres
 data:
-  POSTGRES_DB: greek
+  POSTGRES_DB: drachma
   POSTGRES_USER: gotoschool
   POSTGRES_PASSWORD: goto1234
 ---
@@ -40,13 +40,13 @@ kind: Service
 metadata:
   name: postgres
   labels:
-    app: postgres
+    run: postgres
     tier: backend
 spec:
   ports:
     - port: 5432
   selector:
-    app: postgres
+    run: postgres
     tier: backend
 ---
 apiVersion: v1
@@ -57,16 +57,20 @@ type: Opaque
 data:
   password: c2VjcmV0Cg==
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
 spec:
+  selector:
+    matchLabels:
+      run: postgres
+      tier: backend
   replicas: 1
   template:
     metadata:
       labels:
-        app: postgres
+        run: postgres
         tier: backend
     spec:
       containers:
