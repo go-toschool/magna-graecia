@@ -6,7 +6,7 @@ services:
     hostname: postgres
     restart: always
     networks:
-      greek:
+      greece:
         aliases:
           - postgres
     ports:
@@ -16,10 +16,10 @@ services:
 
       - DB_USER=gotoschool
       - DB_PASS=goto1234
-      - DB_NAME=greek
+      - DB_NAME=drachma
 
-      - POSTGRES_DB=greek
-      - POSTGRES_DATABASE=greek
+      - POSTGRES_DB=drachma
+      - POSTGRES_DATABASE=drachma
       - POSTGRES_USER=gotoschool
       - POSTGRES_PASSWORD=goto1234
     volumes:
@@ -32,12 +32,12 @@ services:
     container_name: syracuse
     hostname: syracuse
     networks:
-      greek:
+      greece:
         aliases:
           - syracuse
     environment:
       PORT: 8001
-      POSTGRES_DSN: "postgres://gotoschool:goto1234@postgres:5432/greek?sslmode=disable"
+      POSTGRES_DSN: "postgres://gotoschool:goto1234@postgres:5432/drachma?sslmode=disable"
     depends_on:
       - postgres
     restart:
@@ -48,7 +48,7 @@ services:
     container_name: sicily
     hostname: sicily
     networks:
-      greek:
+      greece:
         aliases:
           - sicily
     ports:
@@ -70,7 +70,7 @@ services:
     container_name: palermo
     hostname: palermo
     networks:
-      greek:
+      greece:
         aliases:
           - palermo
     environment:
@@ -79,4 +79,4 @@ services:
       on-failure
 
 networks:
-  greek: {}
+  greece: {}
