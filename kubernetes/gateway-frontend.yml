@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: gateway
   labels:
-    app: gateway
+    run: gateway
     tier: frontend
 spec:
   type: LoadBalancer
@@ -11,7 +11,7 @@ spec:
   - port: 3000
     targetPort: http
   selector:
-    app: gateway
+    run: gateway
     tier: frontend
 ---
 apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
@@ -21,15 +21,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: gateway
-      tier: frontend
+      run: gateway
   replicas: 2
   template:
     metadata:
       labels:
-        app: gateway
+        run: gateway
         tier: frontend
-        release: stable
+        uses: palermo_svc
+        version: v0.0.1
     spec:
       restartPolicy: Always
       containers:

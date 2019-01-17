@@ -3,35 +3,34 @@ kind: Service
 metadata:
   name: palermo
   labels:
-    app: palermo
-    role: master
+    run: palermo
     tier: backend
 spec:
   ports:
   - port: 8003
-    targetPort: 8003
+    targetPort: grpc-port-03
   selector:
-    app: palermo
-    role: master
+    run: palermo
     tier: backend
 ---
 apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
 kind: Deployment
 metadata:
   name: palermo
+  labels:
+    run: palermo
 spec:
   selector:
     matchLabels:
-      app: palermo
-      role: master
+      run: palermo
       tier: backend
   replicas: 1
   template:
     metadata:
       labels:
-        app: palermo
-        role: master
+        run: palermo
         tier: backend
+        version: v0.0.1
     spec:
       containers:
       - name: master
@@ -42,3 +41,4 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 8003
+          name: grpc-port-03

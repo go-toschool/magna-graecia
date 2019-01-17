@@ -3,35 +3,35 @@ kind: Service
 metadata:
   name: syracuse
   labels:
-    app: syracuse
-    role: master
+    run: syracuse
     tier: backend
 spec:
   ports:
   - port: 8001
-    targetPort: 8001
+    targetPort: grpc-port-01
   selector:
-    app: syracuse
-    role: master
+    run: syracuse
     tier: backend
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: syracuse
+  labels:
+    run: syracuse
 spec:
   selector:
     matchLabels:
-      app: syracuse
-      role: master
+      run: syracuse
       tier: backend
   replicas: 2
   template:
     metadata:
       labels:
-        app: syracuse
-        role: master
+        run: syracuse
+        uses: postgres
         tier: backend
+        version: v0.0.1
     spec:
       containers:
       - name: master
@@ -42,6 +42,7 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 8001
+          name: grpc-port-01
         env:
         - name: PORT
           value: "8001"
