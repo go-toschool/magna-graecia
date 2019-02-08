@@ -47,4 +47,4 @@ spec:
         - name: PORT
           value: "8001"
         - name: POSTGRES_DSN
-          value: "postgres://gotoschool:goto1234@$(POSTGRES_SERVICE_HOST):5432/greek?sslmode=disable"
+          value: "postgres://gotoschool:goto1234@$(POSTGRES_SERVICE_HOST):$(POSTGRES_SERVICE_PORT)/drachma?sslmode=disable"
