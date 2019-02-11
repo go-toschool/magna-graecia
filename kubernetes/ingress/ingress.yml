@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: http-ingress
+  namespace: default
+spec:
+  rules:
+  - host: gotoschool.com
+    http:
+      paths:
+      - path: /graphql
+        backend:
+          serviceName: graphql-svc
+          servicePort: 3000
+      - path: /session
+        backend:
+          serviceName: session-svc
+          servicePort: 3001
+
+
+

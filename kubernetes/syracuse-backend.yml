@@ -34,7 +34,7 @@ spec:
         version: v0.0.1
     spec:
       containers:
-      - name: master
+      - name: syracuse
         image: docker.io/gotoschool/syracuse:v0.0.1
         resources:
           requests:
