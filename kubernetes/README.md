@@ -1,6 +1,9 @@
 # Kubernetes
 
-To deploy the arch we need to run:
+
+Before running any command, be sure to install [helm](https://github.com/helm/helm), this will be use to install external resource, those resources apply some boost into kubernetes. The first one is [ingress] (see ingress folder).
+
+After install ingress controller run and to deploy the architecture run the following command:
 
 ```sh
 $ up.sh
