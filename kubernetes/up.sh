@@ -11,3 +11,5 @@ kubectl create -f ./palermo-backend.yml
 kubectl create -f ./syracuse-backend.yml
 kubectl create -f ./session-backend.yml
 kubectl create -f ./gateway-backend.yml
+kubectl create -f ./helenia-backend.yml
+kubectl create -f ./plato-backend.yml
