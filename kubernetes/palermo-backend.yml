@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: palermo
+  namespace: gotoschool
   labels:
     run: palermo
     tier: backend
@@ -17,6 +18,7 @@ apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and befor
 kind: Deployment
 metadata:
   name: palermo
+  namespace: gotoschool
   labels:
     run: palermo
 spec:
@@ -37,6 +39,9 @@ spec:
         image: docker.io/gotoschool/palermo:v0.0.1
         resources:
           requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
             cpu: 100m
             memory: 100Mi
         ports:

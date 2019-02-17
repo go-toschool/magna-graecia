@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gateway
+  namespace: gotoschool
 spec:
   selector:
     matchLabels:
@@ -23,17 +24,28 @@ spec:
           requests:
             cpu: 50m
             memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
         env:
         - name: PORT
           value: "3000"
         - name: CITIZENS_HOST
           value: $(SYRACUSE_SERVICE_HOST)
         - name: CITIZENS_PORT
-          value: "8001"
+          value: $(SYRACUSE_SERVICE_PORT)
         - name: PALERMO_HOST
           value: $(PALERMO_SERVICE_HOST)
         - name: PALERMO_PORT
-          value: "8003"
+          value: $(PALERMO_SERVICE_PORT)
+        - name: PLATO_HOST
+          value: $(PLATO_SERVICE_HOST)
+        - name: PLATO_PORT
+          value: $(PLATO_SERVICE_PORT)
+        - name: HELENIA_HOST
+          value: $(HELENIA_SERVICE_HOST)
+        - name: HELENIA_PORT
+          value: $(HELENIA_SERVICE_PORT)
         ports:
         - containerPort: 3000
           name: http-graphql
@@ -43,11 +55,21 @@ spec:
             port: http-graphql
           initialDelaySeconds: 10
           timeoutSeconds: 1
+        args:
+        - -citizens-host=$(CITIZENS_HOST)
+        - -citizens-port=$(CITIZENS_PORT)
+        - -palermo-host=$(PALERMO_HOST)
+        - -palermo-port=$(PALERMO_PORT)
+        - -plato-host=$(PLATO_HOST)
+        - -plato-port=$(PLATO_PORT)
+        - -helenia-host=$(HELENIA_HOST)
+        - -helenia-port=$(HELENIA_PORT)
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: graphql-svc
+  name: graphql
+  namespace: gotoschool
   labels:
     run: gateway
     tier: backend

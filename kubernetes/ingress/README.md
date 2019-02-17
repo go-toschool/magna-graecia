@@ -9,6 +9,12 @@ $ helm init
 Then
 
 ```sh
-$ helm install stable/nginx-ingress
+$ helm install --name go-toschool stable/nginx-ingress
 ```
 
+
+To delete ingress
+
+```sh
+$ helm del --purge go-toschool
+```

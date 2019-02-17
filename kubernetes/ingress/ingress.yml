@@ -1,8 +1,12 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  namespace: gotoschool
   name: http-ingress
-  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    #certmanager.k8s.io/issuer: "letsencrypt-staging"
+    #certmanager.k8s.io/acme-challenge-type: http01
 spec:
   rules:
   - host: gotoschool.com
@@ -10,11 +14,11 @@ spec:
       paths:
       - path: /graphql
         backend:
-          serviceName: graphql-svc
+          serviceName: graphql
           servicePort: 3000
       - path: /session
         backend:
-          serviceName: session-svc
+          serviceName: session
           servicePort: 3001
 
 

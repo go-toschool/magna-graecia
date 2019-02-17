@@ -1,27 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: syracuse
   namespace: gotoschool
-  labels:
-    run: syracuse
+  name: plato
 spec:
   selector:
     matchLabels:
-      run: syracuse
-      tier: backend
-  replicas: 2
+      run: plato
+  replicas: 1
   template:
     metadata:
       labels:
-        run: syracuse
-        uses: postgres
+        run: plato
         tier: backend
         version: v0.0.1
     spec:
+      restartPolicy: Always
       containers:
-      - name: syracuse
-        image: docker.io/gotoschool/syracuse:v0.0.1
+      - name: plato
+        image: gotoschool/plato:v0.0.1
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 50m
@@ -29,12 +27,12 @@ spec:
           limits:
             cpu: 100m
             memory: 100Mi
-        ports:
-        - containerPort: 8001
-          name: grpc-port-01
         env:
         - name: POSTGRES_DSN
           value: "postgres://gotoschool:goto1234@$(POSTGRES_SERVICE_HOST):$(POSTGRES_SERVICE_PORT)/drachma?sslmode=disable"
+        ports:
+        - containerPort: 8004
+          name: grpc-port-04
         args:
         - -postgres-dsn=$(POSTGRES_DSN)
 ---
@@ -42,16 +40,16 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: gotoschool
-  name: syracuse
+  name: plato
   labels:
-    run: syracuse
+    run: plato
     tier: backend
 spec:
   ports:
-  - name: grpc-port-01
-    port: 8001
+  - name: grpc-port-04
+    port: 8004
     protocol: TCP
-    targetPort: 8001
+    targetPort: 8004
   selector:
-    run: syracuse
+    run: plato
     tier: backend
